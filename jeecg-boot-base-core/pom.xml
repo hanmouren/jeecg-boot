@@ -45,19 +45,33 @@
 			<groupId>org.jeecgframework.boot</groupId>
 			<artifactId>jeecg-boot-common</artifactId>
 		</dependency>
-		<!--集成springmvc框架并实现自动配置 -->
+		<!--集成springmvc框架并实现自动配置 (switch to Undertow for smaller footprint and faster startup) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 		<!-- websocket -->
+		<!-- websocket is optional to avoid netty unless needed -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
+			<optional>true</optional>
 		</dependency>
+		<!-- mail starter is optional to avoid pulling JavaMail unless needed -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,9 +87,11 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<!--springboot2.6+解决metrics端点不显示jvm信息的问题-->
+		<!-- micrometer registry can be optional in non-metrics envs -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- commons -->
@@ -178,11 +194,12 @@
 			</exclusions>
 		</dependency>
 
-		<!-- knife4j -->
+		<!-- knife4j (make optional to allow excluding from prod builds) -->
 		<dependency>
 			<groupId>com.github.xiaoymin</groupId>
 			<artifactId>knife4j-spring-boot-starter</artifactId>
 			<version>${knife4j-spring-boot-starter.version}</version>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- 代码生成器 -->

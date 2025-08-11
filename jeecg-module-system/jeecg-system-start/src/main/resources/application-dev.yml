@@ -236,14 +236,10 @@ logging:
     org.jeecg.modules.system.mapper: info
 #swagger
 knife4j:
-  #开启增强配置
   enable: true
-  #开启生产环境屏蔽
   production: false
   basic:
     enable: false
-    username: jeecg
-    password: jeecg1314
 #第三方登录
 justauth:
   enabled: true
