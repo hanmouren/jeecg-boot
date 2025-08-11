@@ -16,6 +16,13 @@
             <groupId>org.jeecgframework.boot</groupId>
             <artifactId>jeecg-boot-base-core</artifactId>
         </dependency>
+        <!-- add only annotations to satisfy compile without UI -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.14</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

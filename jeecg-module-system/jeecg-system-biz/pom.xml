@@ -12,6 +12,20 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.jeecgframework.boot</groupId>
 			<artifactId>jeecg-system-local-api</artifactId>
 		</dependency>
@@ -28,11 +42,13 @@
 		<dependency>
 			<groupId>org.jeecgframework</groupId>
 			<artifactId>jeewx-api</artifactId>
+			<optional>true</optional>
 		</dependency>
-		<!-- 积木报表 -->
+		<!-- 积木报表 (optional to reduce base bundle size) -->
 		<dependency>
 			<groupId>org.jeecgframework.jimureport</groupId>
 			<artifactId>jimureport-spring-boot-starter</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<!-- 积木报表 mongo redis 支持包 
 		<dependency>

@@ -1,11 +1,13 @@
 server:
   port: 8080
+  http2:
+    enabled: true
   tomcat:
     max-swallow-size: -1
   error:
-    include-exception: true
-    include-stacktrace: ALWAYS
-    include-message: ALWAYS
+    include-exception: false
+    include-stacktrace: NEVER
+    include-message: NEVER
   servlet:
     context-path: /jeecg-boot
   compression:
@@ -17,9 +19,18 @@ management:
   endpoints:
     web:
       exposure:
-        include: metrics,httptrace
+        include: metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: false
+  endpoint:
+    health:
+      show-details: never
 
 spring:
+  main:
+    lazy-initialization: true
   servlet:
     multipart:
       max-file-size: 10MB
@@ -79,19 +90,38 @@ spring:
     content-type: text/html
     # 设置页面编码格式
     charset: UTF-8
-    # 设置页面缓存
-    cache: false
+    # 生产环境启用模板缓存
+    cache: true
     prefer-file-system-access: false
     # 设置ftl文件路径
     template-loader-path:
       - classpath:/templates
-    template_update_delay: 0
+    template_update_delay: 60000
   # 设置静态文件路径，js,css等
   mvc:
     static-path-pattern: /**
     #Spring Boot 2.6+后映射匹配的默认策略已从AntPathMatcher更改为PathPatternParser,需要手动指定为ant-path-matcher
     pathmatch:
       matching-strategy: ant_path_matcher
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
+  web:
+    resources:
+      cache:
+        period: 365d
+      chain:
+        enabled: true
+        strategy:
+          content:
+            enabled: true
+            paths: /**
   resource:
     static-locations: classpath:/static/,classpath:/public/
   autoconfigure:
@@ -99,12 +129,12 @@ spring:
   datasource:
     druid:
       stat-view-servlet:
-        enabled: true
+        enabled: false
         loginUsername: admin
         loginPassword: 123456
         allow:
       web-stat-filter:
-        enabled: true
+        enabled: false
     dynamic:
       druid: # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
         # 连接池的配置信息
@@ -245,14 +275,8 @@ logging:
     org.jeecg.modules.system.mapper: info
 #swagger
 knife4j:
-  #开启增强配置
-  enable: true
-  #开启生产环境屏蔽
-  production: false
-  basic:
-    enable: true
-    username: jeecg
-    password: jeecg1314
+  enable: false
+  production: true
 #第三方登录
 justauth:
   enabled: true
